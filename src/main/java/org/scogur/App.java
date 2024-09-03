@@ -58,9 +58,9 @@ public class App implements Runnable {
                 medianPrice = reqPrice.get((reqPrice.size() / 2) + 1);
             }
 
-            System.out.println("Минимальное время полета: " + minimalFlightTime +
-                    "\nРазница между средней ценой и медианой: " + abs(averagePrice - medianPrice));
-            System.out.println("Репозиторий с программой: ");
+            System.out.println("Minimal flight time: " + minimalFlightTime + " minutes" +
+                    "\nDifference between average price and median price: " + abs(averagePrice - medianPrice));
+            System.out.println("GitHub repo: https://github.com/Scogur/ttfj");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
