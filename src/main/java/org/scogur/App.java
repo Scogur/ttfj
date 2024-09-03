@@ -9,10 +9,7 @@ import picocli.CommandLine.Parameters;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -25,6 +22,8 @@ public class App implements Runnable {
         System.out.println("Started " + file);
         HashMap<String, Long> minimalFlightTime = new HashMap<>();
         float averagePrice = 0;
+        int amount = 0;
+        ArrayList<Integer> prices = new ArrayList<>();
         float medianPrice = 0;
         try {
             JSONObject o = new JSONObject((Files.readString(file.toPath())));
@@ -45,21 +44,13 @@ public class App implements Runnable {
                     } else if ( flightTime < minimalFlightTime.get(jo.get("carrier").toString())){
                         minimalFlightTime.put(jo.get("carrier").toString(), flightTime);
                     }
-
+                    prices.add(jo.getInt("price"));
                     averagePrice += (jo.getFloat("price"));
-                    reqPrice.add(jo.getInt("price"));
-
+                    amount ++;
                 }
             }
-            averagePrice /= tickets.length();
-
-            if (reqPrice.size() % 2 == 0){
-                medianPrice += reqPrice.get(reqPrice.size() / 2);
-                medianPrice += reqPrice.get((reqPrice.size() / 2) + 1);
-                medianPrice /=2;
-            } else {
-                medianPrice = reqPrice.get((reqPrice.size() / 2) + 1);
-            }
+            averagePrice /= amount;
+            medianPrice = (float) (Collections.max(prices) + Collections.min(prices)) / 2;
 
             System.out.println("Minimal flight time: " + minimalFlightTime + " minutes" +
                     "\nDifference between average price and median price: " + abs(averagePrice - medianPrice));
