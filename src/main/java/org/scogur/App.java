@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.Math.abs;
 
@@ -18,11 +20,10 @@ import static java.lang.Math.abs;
 public class App implements Runnable {
     @Parameters(index = "0", description = "input tickets.json file")
     private File file;
-    @SuppressWarnings("ReassignedVariable")
     @Override
     public void run() {
         System.out.println("Started " + file);
-        long minimalFlightTime = 0;
+        HashMap<String, Long> minimalFlightTime = new HashMap<>();
         float averagePrice = 0;
         float medianPrice = 0;
         try {
@@ -39,10 +40,12 @@ public class App implements Runnable {
                     MyDate ardate = new MyDate(jo.get("arrival_date").toString());
                     ardate.setTime(jo.get("arrival_time").toString());
                     long flightTime = MyDate.subtraction(depdate, ardate);
-                    if (first){
-                        minimalFlightTime = flightTime;
-                        first = false;
-                    } else if (flightTime < minimalFlightTime) minimalFlightTime = flightTime;
+                    if (minimalFlightTime.isEmpty() | !minimalFlightTime.containsKey(jo.get("carrier").toString())){
+                        minimalFlightTime.put(jo.get("carrier").toString(), flightTime);
+                    } else if ( flightTime < minimalFlightTime.get(jo.get("carrier").toString())){
+                        minimalFlightTime.put(jo.get("carrier").toString(), flightTime);
+                    }
+
                     averagePrice += (jo.getFloat("price"));
                     reqPrice.add(jo.getInt("price"));
 
