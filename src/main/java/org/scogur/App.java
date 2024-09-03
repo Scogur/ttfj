@@ -50,7 +50,12 @@ public class App implements Runnable {
                 }
             }
             averagePrice /= amount;
-            medianPrice = (float) (Collections.max(prices) + Collections.min(prices)) / 2;
+            Collections.sort(prices);
+
+            if (prices.size() % 2  == 0){
+                medianPrice = (float) (prices.get((prices.size()-1)/2) + prices.get((prices.size()-1)/2 +1))/2;
+            } else
+                medianPrice = (float) (prices.get((prices.size()-1)/2+1));
 
             System.out.println("Minimal flight time: " + minimalFlightTime + " minutes" +
                     "\nDifference between average price and median price: " + abs(averagePrice - medianPrice));
