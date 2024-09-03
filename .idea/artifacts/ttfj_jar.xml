@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ttfj:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ttfj_jar</output-path>
+    <root id="archive" name="ttfj.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="ttfj" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/json/json/20240303/json-20240303.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/info/picocli/picocli/4.7.6/picocli-4.7.6.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
